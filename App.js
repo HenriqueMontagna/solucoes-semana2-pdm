@@ -1,45 +1,40 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import { StyleSheet, Button, SafeAreaView, TextInput, FlatList, Text, View, ScrollView } from 'react-native';
+import { ContatoItem } from './components/ContatoItem';
+import ContatoInput from './components/ContatoInput';
 
 export default function App() {
 
-  const [nomeContato, setNomeContato] = useState("");
+  // const [nomeContato, setNomeContato] = useState("");
 
-  const [numeroContato, setNumeroContato] = useState("");
+  // const [numeroContato, setNumeroContato] = useState("");
 
   const [contatos, setContatos] = useState([]);
-
-  const [contador, setContador] = useState(0);
   
   const [key, setKey] = useState(10);
 
-  const capturarNome = (nomeContato) => {
-    setNomeContato(nomeContato);
-  }
+  // const capturarNome = (nomeContato) => {
+  //   setNomeContato(nomeContato);
+  // }
 
-  const capturarNumero = (numeroContato) => {
-    setNumeroContato(numeroContato);
-  };
+  // const capturarNumero = (numeroContato) => {
+  //   setNumeroContato(numeroContato);
+  // };
 
-  const adicionarContato = () => {
-    if (nomeContato && numeroContato) {
-      
+  const adicionarContato = (contato) => {
+    if (contato.nome && contato.numero) {   
       setKey(key + 2);
-
-      setContatos([...contatos, { "key": key, "nome": nomeContato, "numero": numeroContato }])
-      setNomeContato(''); setNumeroContato('')
-
-      setContador(contador + 1);
-      
+      setContatos([...contatos, { "key": key, "nome": contato.nome, "numero": contato.numero }]) 
     }
   }
 
   return (
     <SafeAreaView style={styles.viewGeral}>
 
+      <ContatoInput onAdicionarContato={adicionarContato} />
 
-      <View style={styles.viewInput}>
+      {/* <View style={styles.viewInput}>
 
         <TextInput
           placeholder="Nome do Contato"
@@ -59,28 +54,24 @@ export default function App() {
           value={numeroContato}
         />
 
-        <View>
           <Button
-            style={styles.button}
             title="Adicionar"
             color="#FF8000"
             onPress={() => {
               adicionarContato()
             }}
           />
-          <Text style={styles.contador}>Total de Contatos: {contador}</Text>
-        </View>
 
-      </View>
+
+      </View> */}
 
 
       <FlatList
         data={contatos}
-        renderItem={(contato) => (
-          <View style = {styles.itemList}>
-            <Text style = {styles.itemListNome}>{contato.item.nome}</Text>
-            <Text>{contato.item.numero}</Text>
-          </View>
+        renderItem={(contato) => (<ContatoItem 
+          nomeContato = {contato.item.nome}
+          numeroContato = {contato.item.numero}
+        />
         )
       }
       />
@@ -117,12 +108,6 @@ const styles = StyleSheet.create({
     marginTop: 35,
     borderWidth: 2,
     borderColor: '#FAB953'
-  },
-
-  button: {
-    color: '#234678',
-    backgroundColor: '#FF8000',
-    paddingTop: 30
   },
 
   textInput: {
