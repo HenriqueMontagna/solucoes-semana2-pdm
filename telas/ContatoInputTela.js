@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { View, TextInput, StyleSheet, Button } from 'react-native'
 
-const ContatoInput = (props) => {
+const ContatoInputTela = (props) => {
 
     const [nomeContato, setNomeContato] = useState("");
 
@@ -23,6 +23,11 @@ const ContatoInput = (props) => {
         setNomeContato(''); setNumeroContato('')
     }
 
+    const handleAddContact = () => {
+        props.navigation.getParam('onAddContact')({ nomeContato, numeroContato })
+        props.navigation.navigate('ListaDeContatos');
+        clearFields();
+      }
 
     return (
         <View style={styles.viewInput}>
@@ -45,11 +50,7 @@ const ContatoInput = (props) => {
             <Button
                 color="#FF8000"
                 title="Adicionar"
-                onPress={() => {
-                    handleAddContact;
-                    clearFields();
-                }
-              }
+                onPress={handleAddContact}
             />
         </View>
     )
@@ -73,4 +74,4 @@ const styles = StyleSheet.create({
 
 })
 
-export default ContatoInput;
+export default ContatoInputTela;
